@@ -48,3 +48,7 @@ div.container button, div.container input {
     background-color: #33194f;
     cursor: pointer;
 }
+
+.task-li.done-task {
+    text-decoration: line-through;
+}

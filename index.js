@@ -1,3 +1,5 @@
+/* State */
+const tasks = [];
 
 /* Cash the DOM */
 const createNewTaskInput = document.querySelector('#create-task-input');
@@ -24,6 +26,7 @@ const addNewTask = taskTitle => {
     if (taskTitle) {
         const newTask = createTaskElement(taskTitle);
         tasksUl.appendChild(newTask);
+        tasks.push({ title: taskTitle, isDone: false })
     } else {
         alert('Please provide a valid task title!');
     }
@@ -42,7 +45,22 @@ createNewTaskInput.addEventListener('keyup', e => {
         addNewTask(createNewTaskInput.value);
         createNewTaskInput.value = '';
     }
-})
+});
+
+/* When user want to click on a task */
+document.addEventListener('click', e => {
+    const targetTaskElement = e.target;
+    if (targetTaskElement.classList.value.includes('task-li')) {
+        // Update the state of the task in tasks list
+        const targetTaskObject = tasks.find(t => t.title === targetTaskElement.innerHTML);
+        if (targetTaskObject.isDone) {
+            targetTaskElement.classList.remove('done-task');
+        } else {
+            targetTaskElement.classList.add('done-task');
+        }
+        targetTaskObject.isDone = !targetTaskObject.isDone;
+    }
+});
 
 /* Main function that contains all the app logic */
 const main = () => {
