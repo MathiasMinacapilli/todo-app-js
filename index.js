@@ -3,6 +3,7 @@ const tasks = [];
 
 /* Cash the DOM */
 const createNewTaskInput = document.querySelector('#create-task-input');
+const createNewTaskButton = document.querySelector('#create-task-btn');
 const tasksCountSpan = document.querySelector('#tasks-count-span');
 const doneTasksCountSpan = document.querySelector('#done-tasks-count-span');
 const tasksUl = document.querySelector('#tasks-ul');
@@ -16,6 +17,14 @@ Aux functions
 /* Returns true only if the create new task input is empty. False in other case */
 const isEmptyCreateNewTaskInput = () => !!(createNewTaskInput && createNewTaskInput.value === '');
 
+/* Handles the add new task event */
+const addNewTaskEventHandler = () => {
+    if (!isEmptyCreateNewTaskInput()) {
+        addNewTask(createNewTaskInput.value);
+        createNewTaskInput.value = '';
+    }
+}
+
 /* Returns a task HTML elemnt with the given title */
 const createTaskElement = taskTitle => {
     const newTask = document.createElement('li');
@@ -24,6 +33,7 @@ const createTaskElement = taskTitle => {
     return newTask;
 }
 
+/* Add new task with given title to the DOM and to the tasks state array */
 const addNewTask = taskTitle => {
     if (taskTitle) {
         const newTask = createTaskElement(taskTitle);
@@ -45,10 +55,14 @@ Event listeners
 /* When user wants to create a new task by pressind enter */
 createNewTaskInput.addEventListener('keyup', e => {
     e.preventDefault();
-    if (e.key === 'Enter' && !isEmptyCreateNewTaskInput()) {
-        addNewTask(createNewTaskInput.value);
-        createNewTaskInput.value = '';
+    if (e.key === 'Enter') {
+        addNewTaskEventHandler();
     }
+});
+
+createNewTaskButton.addEventListener('click', e => {
+    e.preventDefault();
+    addNewTaskEventHandler();
 });
 
 /* When user want to click on a task to mark it as done or undone */
