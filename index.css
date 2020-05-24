@@ -1,0 +1,50 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    background-color: #eeeeee;
+}
+
+main {
+    margin-left: auto;
+    text-align: center;
+}
+
+div.container {
+    background-color: #452766;
+    padding: 10px 30px;
+    border-radius: 20px;
+    max-width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.container * {
+    color: white;
+}
+
+div.container button, div.container input {
+    color: black;
+}
+
+#tasks-ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 40px;
+}
+
+.task-li {
+    font-size: 30px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.task-li:hover {
+    background-color: #33194f;
+    cursor: pointer;
+}
