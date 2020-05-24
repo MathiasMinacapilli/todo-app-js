@@ -3,6 +3,8 @@ const tasks = [];
 
 /* Cash the DOM */
 const createNewTaskInput = document.querySelector('#create-task-input');
+const tasksCountSpan = document.querySelector('#tasks-count-span');
+const doneTasksCountSpan = document.querySelector('#done-tasks-count-span');
 const tasksUl = document.querySelector('#tasks-ul');
 
 /* 
@@ -26,7 +28,9 @@ const addNewTask = taskTitle => {
     if (taskTitle) {
         const newTask = createTaskElement(taskTitle);
         tasksUl.appendChild(newTask);
-        tasks.push({ title: taskTitle, isDone: false })
+        tasks.push({ title: taskTitle, isDone: false });
+        // Update the tasks count number
+        tasksCountSpan.innerHTML = tasks.length;
     } else {
         alert('Please provide a valid task title!');
     }
@@ -47,7 +51,7 @@ createNewTaskInput.addEventListener('keyup', e => {
     }
 });
 
-/* When user want to click on a task */
+/* When user want to click on a task to mark it as done or undone */
 document.addEventListener('click', e => {
     const targetTaskElement = e.target;
     if (targetTaskElement.classList.value.includes('task-li')) {
@@ -55,8 +59,10 @@ document.addEventListener('click', e => {
         const targetTaskObject = tasks.find(t => t.title === targetTaskElement.innerHTML);
         if (targetTaskObject.isDone) {
             targetTaskElement.classList.remove('done-task');
+            doneTasksCountSpan.innerHTML = parseInt(doneTasksCountSpan.innerHTML) - 1;
         } else {
             targetTaskElement.classList.add('done-task');
+            doneTasksCountSpan.innerHTML = parseInt(doneTasksCountSpan.innerHTML) + 1;
         }
         targetTaskObject.isDone = !targetTaskObject.isDone;
     }

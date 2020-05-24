@@ -51,4 +51,5 @@ div.container button, div.container input {
 
 .task-li.done-task {
     text-decoration: line-through;
+    color: #937dac;
 }
