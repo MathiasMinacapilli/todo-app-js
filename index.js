@@ -4,6 +4,7 @@ const tasks = [];
 /* Cash the DOM */
 const createNewTaskInput = document.querySelector('#create-task-input');
 const createNewTaskButton = document.querySelector('#create-task-btn');
+const tasksMessagesDiv = document.querySelector('#tasks-messages-div');
 const tasksCountSpan = document.querySelector('#tasks-count-span');
 const doneTasksCountSpan = document.querySelector('#done-tasks-count-span');
 const tasksUl = document.querySelector('#tasks-ul');
@@ -46,6 +47,24 @@ const addNewTask = taskTitle => {
     }
 }
 
+/* If all tasks have been done, then add a successful message to alert the user. If not, then the message will be removed */
+const checkIfAllTasksHaveBeenDone = () => {
+    // TODO: improve perfomance, not necessary to iterate over all tasks array every time this process is invoked
+    if (tasks.every(t => t.isDone)) {
+        const successMessage = document.createElement('p');
+        successMessage.id = 'success-message-p';
+        successMessage.style.color = '#d28aff';
+        successMessage.innerHTML = 'Congrats! You have completed all your tasks';
+        tasksMessagesDiv.appendChild(successMessage);
+    } else {
+        const successMessageP = document.querySelector('#success-message-p');
+        if (successMessageP) {
+            const wrapper = successMessageP.parentNode;
+            wrapper.removeChild(successMessageP);
+        }
+    }
+}
+
 /* 
 ==========================================
 Event listeners
@@ -79,6 +98,7 @@ document.addEventListener('click', e => {
             doneTasksCountSpan.innerHTML = parseInt(doneTasksCountSpan.innerHTML) + 1;
         }
         targetTaskObject.isDone = !targetTaskObject.isDone;
+        checkIfAllTasksHaveBeenDone();
     }
 });
 
